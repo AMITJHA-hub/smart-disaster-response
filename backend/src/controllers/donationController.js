@@ -86,7 +86,66 @@ const getEmergencyDonationPledges = async (req, res) => {
         });
     }
 };
+
+const getMyDonationPledges = async (req, res) => {
+    try {
+        const pledges = await DonationPledge.find({ donor: req.user.userId })
+            .populate("emergency")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            message: "Donation pledges retrieved successfully",
+            pledges
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
+
+const getAllDonationPledges = async (req, res) => {
+    try {
+        const pledges = await DonationPledge.find()
+            .populate("emergency")
+            .populate("donor", "name email phone")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            message: "Donation pledges retrieved successfully",
+            pledges
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
+
+const verifyDonationPledge = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const pledge = await DonationPledge.findById(id);
+
+        if (!pledge) {
+            return res.status(404).json({ message: "Donation pledge not found" });
+        }
+
+        pledge.status = "Fulfilled";
+        await pledge.save();
+
+        return res.status(200).json({
+            message: "Donation pledge verified successfully",
+            pledge
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error" });
+    }
+};
+
 module.exports = {
     createDonationPledge,
-    getEmergencyDonationPledges
+    getEmergencyDonationPledges,
+    getMyDonationPledges,
+    getAllDonationPledges,
+    verifyDonationPledge
 };

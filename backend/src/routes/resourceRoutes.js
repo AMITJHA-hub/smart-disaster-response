@@ -6,7 +6,8 @@ const authorizeRoles = require("../middleware/authorizeRoles");
 const {
     addEmergencyResource,
     getEmergencyResources,
-    updateEmergencyResource
+    updateEmergencyResource,
+    getAllResources
 } = require("../controllers/resourceController");
 
 const router = express.Router();
@@ -16,6 +17,13 @@ router.post(
     authMiddleware,
     authorizeRoles("Administrator"),
     addEmergencyResource
+);
+
+router.get(
+    "/all",
+    authMiddleware,
+    authorizeRoles("Administrator"),
+    getAllResources
 );
 
 router.get(

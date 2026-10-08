@@ -5,10 +5,26 @@ const authorizeRoles = require("../middleware/authorizeRoles");
 
 const {
     assignVolunteer,
-    updateAssignmentStatus
+    updateAssignmentStatus,
+    getMyAssignments,
+    getAllAssignments
 } = require("../controllers/assignmentController");
 
 const router = express.Router();
+
+router.get(
+    "/me",
+    authMiddleware,
+    authorizeRoles("Volunteer"),
+    getMyAssignments
+);
+
+router.get(
+    "/",
+    authMiddleware,
+    authorizeRoles("Administrator"),
+    getAllAssignments
+);
 
 router.post(
     "/",

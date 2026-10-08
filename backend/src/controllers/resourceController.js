@@ -136,8 +136,24 @@ const updateEmergencyResource = async (req, res) => {
         });
     }
 };
+const getAllResources = async (req, res) => {
+    try {
+        const resources = await EmergencyResource.find().populate('emergency', 'category location');
+        return res.status(200).json({
+            message: "All emergency resources retrieved successfully",
+            resources
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Server error"
+        });
+    }
+};
+
 module.exports = {
     addEmergencyResource,
     getEmergencyResources,
-    updateEmergencyResource
+    updateEmergencyResource,
+    getAllResources
 };

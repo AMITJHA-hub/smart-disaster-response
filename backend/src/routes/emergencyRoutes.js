@@ -29,7 +29,7 @@ router.get(
 router.get(
     "/",
     authMiddleware,
-    authorizeRoles("Administrator", "Volunteer", "Emergency_Personnel"),
+    authorizeRoles("Administrator", "Volunteer", "Emergency_Personnel", "Donor"),
     getAllEmergencies
 );
 router.patch(

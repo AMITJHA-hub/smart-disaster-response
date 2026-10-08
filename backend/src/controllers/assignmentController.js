@@ -156,7 +156,51 @@ const updateAssignmentStatus = async (req, res) => {
         });
     }
 };
+
+const getMyAssignments = async (req, res) => {
+    try {
+        const volunteer = await Volunteer.findOne({ user: req.user.userId });
+        if (!volunteer) {
+            return res.status(404).json({ message: "Volunteer profile not found" });
+        }
+
+        const assignments = await VolunteerAssignment.find({ volunteer: volunteer._id })
+            .populate("emergency")
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            message: "Assignments fetched successfully",
+            assignments
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch assignments" });
+    }
+};
+
+const getAllAssignments = async (req, res) => {
+    try {
+        const assignments = await VolunteerAssignment.find()
+            .populate("emergency")
+            .populate({
+                path: "volunteer",
+                populate: { path: "user", select: "name email phone" }
+            })
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            message: "Assignments fetched successfully",
+            assignments
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch assignments" });
+    }
+};
+
 module.exports = {
     assignVolunteer,
-    updateAssignmentStatus
+    updateAssignmentStatus,
+    getMyAssignments,
+    getAllAssignments
 };
