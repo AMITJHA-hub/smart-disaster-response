@@ -1,0 +1,206 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "tailwindcss-animate";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #09090b; /* Zinc 950 for background */
+    --foreground: #fafafa;
+  }
+}
+
+body {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Custom Deep Charcoal/Slate Theme Overrides for DaisyUI */
+[data-theme="dark"] {
+  --color-base-100: #121214; /* Extremely dark charcoal for cards */
+  --color-base-200: #18181b; /* Slightly lighter */
+  --color-base-300: #27272a; /* Zinc 800 for borders */
+  --color-base-content: #fafafa;
+  
+  --color-primary: #6366f1; /* Indigo 500 */
+  --color-primary-content: #ffffff;
+  
+  --color-info: #06b6d4; /* Cyan 500 */
+  --color-success: #10b981; /* Emerald 500 */
+  --color-warning: #f59e0b; /* Amber 500 */
+  --color-error: #ef4444; /* Red 500 */
+}
+
+/* Add premium gradient cards */
+.glass-panel {
+  background: linear-gradient(145deg, rgba(30, 30, 34, 0.7) 0%, rgba(18, 18, 20, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.premium-card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 40px -10px rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* Premium Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 15px -3px rgba(99, 102, 241, 0.4) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px -5px rgba(99, 102, 241, 0.6) !important;
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Smooth Modals */
+.modal-box {
+  background: linear-gradient(145deg, #18181b 0%, #121214 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  animation: modal-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes modal-pop {
+  0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Staggered row animations */
+tr {
+  animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+tr:nth-child(1) { animation-delay: 50ms; }
+tr:nth-child(2) { animation-delay: 100ms; }
+tr:nth-child(3) { animation-delay: 150ms; }
+tr:nth-child(4) { animation-delay: 200ms; }
+tr:nth-child(5) { animation-delay: 250ms; }
+tr:nth-child(n+6) { animation-delay: 300ms; }
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateX(-10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ========== AI Feature Animations ========== */
+
+/* Shimmer loading effect for AI panels */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.ai-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(99, 102, 241, 0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Glowing pulse for active AI elements */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.05); }
+  50% { box-shadow: 0 0 16px rgba(99, 102, 241, 0.35), 0 0 40px rgba(99, 102, 241, 0.1); }
+}
+
+.ai-glow {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Typing indicator dots */
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+.ai-typing-dot:nth-child(1) { animation: typingBounce 1.4s ease-in-out infinite; animation-delay: 0s; }
+.ai-typing-dot:nth-child(2) { animation: typingBounce 1.4s ease-in-out infinite; animation-delay: 0.2s; }
+.ai-typing-dot:nth-child(3) { animation: typingBounce 1.4s ease-in-out infinite; animation-delay: 0.4s; }
+
+/* Card reveal animation */
+@keyframes cardReveal {
+  0% { opacity: 0; transform: translateY(20px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ai-card-reveal {
+  animation: cardReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger delays for ai cards */
+.ai-stagger-1 { animation-delay: 0.1s; }
+.ai-stagger-2 { animation-delay: 0.2s; }
+.ai-stagger-3 { animation-delay: 0.3s; }
+.ai-stagger-4 { animation-delay: 0.4s; }
+
+/* Gradient border for AI panels */
+.ai-gradient-border {
+  position: relative;
+  border: none !important;
+}
+
+.ai-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(168, 85, 247, 0.3), rgba(99, 102, 241, 0.1));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* Progress bar animation */
+@keyframes progressFill {
+  0% { width: 0%; }
+}
+
+.ai-progress-fill {
+  animation: progressFill 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Badge pop-in */
+@keyframes badgePop {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.ai-badge-pop {
+  animation: badgePop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Notification slide */
+@keyframes notifSlide {
+  0% { opacity: 0; transform: translateX(100%); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.ai-notif-slide {
+  animation: notifSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
